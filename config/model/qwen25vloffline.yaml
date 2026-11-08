@@ -1,0 +1,7 @@
+defaults:
+  - base
+  - _self_
+
+model_id: qwen2.5-vl-7b
+module_name: models.qwenoffline
+class_name: Qwen2_5VL

@@ -1,0 +1,7 @@
+defaults:
+  - base
+  - _self_
+
+model_id: tiiuae/falcon-rw-1b
+module_name: models.falcon
+class_name: Falcon

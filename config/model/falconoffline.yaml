@@ -1,0 +1,7 @@
+defaults:
+  - base
+  - _self_
+
+model_id: falcon-rw-1b
+module_name: models.falconoffline
+class_name: Falcon

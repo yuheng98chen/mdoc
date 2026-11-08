@@ -1,0 +1,31 @@
+# Local documentation
+/README.zh-CN.md
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Credentials
+.env
+.env.*
+!.env.example
+
+# Generated data and outputs
+/tmp/
+/mdoc/tmp/
+/data/
+/outputs/
+/.ragatouille/
+**/indexes/
+*.log
+sample_result.json
+
+# Downloaded model weights
+/models/qwen2.5-vl-7b/
+/models/qwen2.5-vl-32b/
+/models/falcon-rw-1b/
+/retrieval/local_colpaligemma/
+/retrieval/local_colpali_adapter/
+/retrieval/local_colbert/

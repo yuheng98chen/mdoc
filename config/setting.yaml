@@ -1,0 +1,74 @@
+extract:
+  extract_dir: ./mdoc/tmp/ 
+  max_page: 1000
+
+retrieval:
+  top_k: 5
+  mix_question_key: mix_q
+  r_mix_key: mix-top-${.top_k}-${.mix_question_key}
+
+
+text_retrieval:
+  text_question_key: question
+
+  r_text_key: "text-top-${retrieval.top_k}-${.text_question_key}"
+  r_text_index_key: "text-index-path-${.text_question_key}"
+
+  text_max_page: 1000
+  text_max_character_per_page: 1024
+  cuda_visible_devices: '0'
+
+
+
+image_retrieval:
+  batch_size: 2
+  r_image_key: image-top-${retrieval.top_k}-${image_retrieval.image_question_key}
+  image_question_key: question
+
+
+mdoc_agent:
+  cuda_visible_devices: '0,1,2,3'
+  truncate_len: null # Used for debugging; set to null for normal use
+  save_freq: 10 # Frequency of saving checkpoints
+  ans_key: ans_key # Key name for generated answers during prediction
+  save_message: false # Set to true to record responses from all agents
+
+  agents:
+    - agent: image_agent # Configures prompt and controls whether to use text/image as reference material
+      model: qwen25vl # Configures the model to use
+    - agent: text_agent
+      model: qwen25vl
+    - agent: general_agent
+      model: qwen25vl
+  
+  sum_agent:
+    agent: sum_agent # Responsible for summarizing answers from all agents
+    model: qwen25vl
+
+run-name: mmlb-MDA # Experiment name
+
+eval_agent: # Used for result evaluation
+  truncate_len: null # Used for debugging; set to null for normal use
+  ans_key: ans_key
+  agent: base
+  model: openai
+
+predict:
+  extract_dir: ${extract.extract_dir}
+  question_key: question
+  gt_key: answer
+  page_id_key: page_ids
+
+  top_k: 2
+  truncate_len: null
+  max_page: 1000
+  max_character_per_page: 100000
+  use_mix: false
+  r_text_key: ${text_retrieval.r_text_key}
+  r_image_key: ${image_retrieval.r_image_key}
+  r_mix_key: ${retrieval.r_mix_key}
+
+
+input:
+  pdf_path: ""
+  question: ""
